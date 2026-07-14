@@ -1,52 +1,52 @@
-# Bearer Token Extractor - Extension Chrome
+# Bearer Token Extractor - Chrome Extension
 
-Extension Chrome (Manifest V3) pour capturer automatiquement les bearer tokens des requêtes vers `https://localhost:8080/*`.
+A Chrome extension (Manifest V3) to automatically capture bearer tokens from requests to `https://localhost:8080/*`.
 
-## Fonctionnalités
+## Features
 
-✅ Intercepte toutes les requêtes vers `https://localhost:8080/*`
-✅ Extrait automatiquement le bearer token du header `Authorization`
-✅ Sauvegarde le token dans un fichier texte (dans le dossier Téléchargements)
-✅ Interface popup pour voir le dernier token capturé
-✅ Compatible Manifest V3
+✅ Intercepts all requests to `https://localhost:8080/*`
+✅ Automatically extracts the bearer token from the `Authorization` header
+✅ Saves the token in a text file (in the Downloads folder)
+✅ Popup interface to view the last captured token
+✅ Compatible with Manifest V3
 
 ## Installation
 
-### 1. Charger l'extension en mode développeur
+### 1. Load the extension in developer mode
 
-1. Ouvre Chrome et va dans `chrome://extensions/`
-2. Active le "Mode développeur" (toggle en haut à droite)
-3. Clique sur "Charger l'extension non empaquetée"
-4. Sélectionne le dossier `bearer-token-extension`
+1. Open Chrome and navigate to `chrome://extensions/`
+2. Enable "Developer mode" (toggle in the top right corner)
+3. Click "Load unpacked"
+4. Select the `bearer-token-extension` folder
 
-### 2. Autoriser les certificats auto-signés (pour localhost HTTPS)
+### 2. Allow self-signed certificates (for localhost HTTPS)
 
-Comme tu utilises `https://localhost:8080`, Chrome bloque par défaut les certificats auto-signés. Tu dois :
+Since you're using `https://localhost:8080`, Chrome blocks self-signed certificates by default. You need to:
 
-1. Va sur `chrome://flags/#allow-insecure-localhost`
-2. Active "Allow invalid certificates for resources loaded from localhost"
-3. Redémarre Chrome
+1. Go to `chrome://flags/#allow-insecure-localhost`
+2. Enable "Allow invalid certificates for resources loaded from localhost"
+3. Restart Chrome
 
-## Utilisation
+## Usage
 
-1. Une fois l'extension installée, elle écoute automatiquement les requêtes
-2. Quand un bearer token est détecté dans une requête vers `https://localhost:8080/*`, il est :
-   - Automatiquement sauvegardé dans un fichier `bearer-token-[timestamp].txt` dans ton dossier Téléchargements
-   - Affiché dans le popup de l'extension
-3. Clique sur l'icône de l'extension pour voir le dernier token capturé
+1. Once the extension is installed, it automatically listens for requests
+2. When a bearer token is detected in a request to `https://localhost:8080/*`, it will be:
+   - Automatically saved in a `bearer-token-[timestamp].txt` file in your Downloads folder
+   - Displayed in the extension's popup
+3. Click the extension icon to view the last captured token
 
-## Structure des fichiers
+## File Structure
 
 ```
 bearer-token-extension/
-├── manifest.json          # Configuration Manifest V3
-├── background.js          # Service worker qui intercepte les requêtes
-├── popup.html            # Interface utilisateur
-├── popup.js              # Logique du popup
-├── icon16.png            # Icône 16x16
-├── icon48.png            # Icône 48x48
-├── icon128.png           # Icône 128x128
-└── README.md             # Ce fichier
+├── manifest.json          # Manifest V3 configuration
+├── background.js          # Service worker that intercepts requests
+├── popup.html            # User interface
+├── popup.js              # Popup logic
+├── icon16.png            # 16x16 icon
+├── icon48.png            # 48x48 icon
+├── icon128.png           # 128x128 icon
+└── README.md             # This file
 ```
 
 ## Notes techniques

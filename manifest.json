@@ -2,7 +2,7 @@
 	"manifest_version": 3,
 	"name": "Bearer Token Extractor",
 	"version": "1.0.0",
-	"description": "Capture les bearer tokens des requêtes vers localhost:8080",
+	"description": "Captures bearer tokens from requests to localhost:8080",
 	"permissions": ["webRequest", "downloads", "downloads.shelf", "storage"],
 	"host_permissions": ["https://localhost:8080/*"],
 	"background": {

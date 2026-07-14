@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!doctype html>
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,7 +32,7 @@
 				font-size: 12px;
 				overflow-x: auto;
 				white-space: nowrap;
-				font-family: 'Courier New', monospace;
+				font-family: "Courier New", monospace;
 			}
 			.no-token {
 				color: #666;
@@ -103,19 +103,15 @@
 		<div class="status" id="statusDiv">✓ Extension active</div>
 
 		<div id="lastToken">
-			<strong>Dernier token capturé :</strong>
-			<div class="token-info no-token">Aucun token capturé pour le moment</div>
-		</div>
+		<strong>Last captured token:</strong>
+		<div class="token-info no-token">No token captured yet</div>
 
 		<div class="settings">
-			<label for="urlInput">URL à monitorer :</label>
-			<input type="text" id="urlInput" placeholder="https://exemple.com/*" />
-			<span class="settings-hint">Utilisez * comme wildcard (ex: https://localhost:8080/*)</span>
-		</div>
+		<label for="urlInput">URL to monitor:</label>
+		<input type="text" id="urlInput" placeholder="https://example.com/*" />
+		<span class="settings-hint">Use * as wildcard (e.g: https://localhost:8080/*)</span>
 
-		<div class="info">
-			Token capturé depuis les requêtes vers l'URL configurée.
-		</div>
+		<div class="info">Token captured from requests to the configured URL.</div>
 		<script src="popup.js"></script>
 	</body>
 </html>
