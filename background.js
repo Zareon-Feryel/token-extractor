@@ -64,7 +64,14 @@ function setupListener(urlPattern) {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	if (message.type === "GET_LAST_TOKEN") {
-		sendResponse({ token: lastToken, timestamp: lastTokenTimestamp });
+		// Always fetch from persistent storage to handle service worker restarts
+		chrome.storage.local.get(["lastToken", "lastUpdate"], (result) => {
+			sendResponse({
+				token: result.lastToken || lastToken,
+				timestamp: result.lastUpdate || lastTokenTimestamp,
+			});
+		});
+		return true; // Keep the channel open for async response
 	} else if (message.type === "UPDATE_URL") {
 		currentUrl = message.url;
 		chrome.storage.local.set({ monitoringUrl: message.url });
