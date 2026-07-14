@@ -26,10 +26,10 @@ function setupListener(urlPattern) {
 	listenerCallback = (details) => {
 		const authHeader = details.requestHeaders?.find((header) => header.name.toLowerCase() === "authorization");
 
-		if (authHeader && authHeader.value) {
+		if (authHeader?.value) {
 			const match = authHeader.value.match(/^Bearer\s+(.+)$/i);
 
-			if (match && match[1]) {
+			if (match?.[1]) {
 				const token = match[1];
 
 				if (token !== lastToken) {
