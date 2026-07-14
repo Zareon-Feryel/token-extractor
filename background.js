@@ -36,6 +36,12 @@ function setupListener(urlPattern) {
 					lastToken = token;
 					lastTokenTimestamp = new Date().toISOString();
 
+					// Save to persistent storage
+					chrome.storage.local.set({
+						lastToken: token,
+						lastUpdate: lastTokenTimestamp,
+					});
+
 					chrome.runtime
 						.sendMessage({
 							type: "TOKEN_CAPTURED",
