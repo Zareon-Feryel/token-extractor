@@ -47,15 +47,52 @@ function updateStatusDisplay(url) {
 	statusDiv.textContent = `✓ Extension active - Listening on ${url}`;
 }
 
+function parseJwt(token) {
+	try {
+		const base64Url = token.split(".")[1];
+		const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+		const jsonPayload = decodeURIComponent(
+			atob(base64)
+				.split("")
+				.map(function (c) {
+					return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+				})
+				.join(""),
+		);
+
+		return JSON.parse(jsonPayload);
+	} catch (e) {
+		return null;
+	}
+}
+
 function displayToken(token, timestamp = null) {
 	const tokenDiv = document.getElementById("lastToken");
 	const timestampHtml = timestamp ? `<span class="timestamp">at ${new Date(timestamp).toLocaleString("en-US")}</span>` : "";
+
+	// Decode token for expiry information
+	const payload = parseJwt(token);
+	let expiryHtml = "";
+
+	if (payload?.exp) {
+		const expiryDate = new Date(payload.exp * 1000);
+		const now = new Date();
+		const isExpired = now > expiryDate;
+
+		expiryHtml = `
+      <div class="expiry-tag ${isExpired ? "expired" : "valid"}">
+        <span class="expiry-dot"></span>
+        ${isExpired ? "Expired" : "Valid until"}: ${expiryDate.toLocaleString()}
+      </div>
+    `;
+	}
 
 	tokenDiv.innerHTML = `
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
       <strong>Last captured token ${timestampHtml}</strong>
       <button id="copyBtn" class="copy-btn">Copy</button>
     </div>
+    ${expiryHtml}
     <div class="token-info">
       ${token}
     </div>

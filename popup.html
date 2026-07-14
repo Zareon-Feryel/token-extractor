@@ -95,12 +95,37 @@
 			.copy-btn.copied {
 				background-color: #2196f3;
 			}
+			.expiry-tag {
+				font-size: 11px;
+				margin-bottom: 8px;
+				display: flex;
+				align-items: center;
+				gap: 4px;
+				font-weight: 500;
+			}
+			.expiry-tag.valid {
+				color: #2e7d32;
+			}
+			.expiry-tag.expired {
+				color: #d32f2f;
+			}
+			.expiry-dot {
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+			}
+			.valid .expiry-dot {
+				background-color: #4caf50;
+			}
+			.expired .expiry-dot {
+				background-color: #f44336;
+			}
 		</style>
 	</head>
 	<body>
 		<h1>🔐 Bearer Token Extractor</h1>
 
-		<div class="status" id="statusDiv">✓ Extension active</div>
+		<div class="status" id="statusDiv">✓ Extension enabled</div>
 
 		<div id="lastToken">
 			<strong>Last captured token:</strong>
