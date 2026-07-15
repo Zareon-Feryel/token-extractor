@@ -7,6 +7,7 @@ let lastTokenData = {
 chrome.storage.local.get(["monitoringUrl", "lastToken", "lastUpdate"], (result) => {
 	const url = result.monitoringUrl || "https://localhost:8080/*";
 	document.getElementById("urlInput").value = url;
+	updateStatusDisplay(url);
 
 	if (result.lastToken) {
 		displayToken(result.lastToken, result.lastUpdate);
@@ -44,7 +45,42 @@ chrome.runtime.onMessage.addListener((message) => {
 
 function updateStatusDisplay(url) {
 	const statusDiv = document.getElementById("statusDiv");
-	statusDiv.textContent = `✓ Extension active - Listening on ${url}`;
+	const statusText = document.getElementById("statusText");
+
+	if (!url) {
+		statusDiv.className = "status inactive";
+		statusText.textContent = "Extension inactive - No URL configured";
+		return;
+	}
+
+	try {
+		// Try to query tabs with the given pattern
+		chrome.tabs.query({ url: url }, (tabs) => {
+			if (chrome.runtime.lastError) {
+				statusDiv.className = "status inactive";
+				statusText.textContent = "Extension inactive - Invalid URL pattern";
+				return;
+			}
+
+			if (tabs && tabs.length > 0) {
+				statusDiv.className = "status active";
+				try {
+					const hostname = new URL(tabs[0].url).hostname;
+					statusText.textContent = `Listening on ${hostname}`;
+				} catch (urlError) {
+					console.error("URL parsing error:", urlError);
+					statusText.textContent = "Extension active - Listening";
+				}
+			} else {
+				statusDiv.className = "status inactive";
+				statusText.textContent = "Extension inactive - No matching tab found";
+			}
+		});
+	} catch (patternError) {
+		console.error("Invalid match pattern:", patternError);
+		statusDiv.className = "status inactive";
+		statusText.textContent = "Extension inactive - Invalid URL pattern";
+	}
 }
 
 function parseJwt(token) {

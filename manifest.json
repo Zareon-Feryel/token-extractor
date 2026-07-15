@@ -3,8 +3,8 @@
 	"name": "Bearer Token Extractor",
 	"version": "1.0.0",
 	"description": "Captures bearer tokens from requests to localhost:8080",
-	"permissions": ["webRequest", "downloads", "downloads.shelf", "storage"],
-	"host_permissions": ["https://localhost:8080/*"],
+	"permissions": ["webRequest", "downloads", "downloads.shelf", "storage", "tabs"],
+	"host_permissions": ["<all_urls>"],
 	"background": {
 		"service_worker": "background.js"
 	},
